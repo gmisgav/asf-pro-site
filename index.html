@@ -40,7 +40,7 @@ p { margin: 0; }
     radial-gradient(38% 30% at 50% 6%, rgba(40, 92, 190, .55), transparent 75%),
     radial-gradient(14% 12% at 8% 4%, rgba(170, 200, 255, .35), transparent 80%),
     radial-gradient(14% 12% at 92% 4%, rgba(170, 200, 255, .35), transparent 80%),
-    linear-gradient(180deg, rgba(11, 26, 69, .78) 0%, rgba(5, 12, 34, 0) 68%);
+    linear-gradient(180deg, rgba(11, 26, 69, .45) 0%, rgba(5, 12, 34, 0) 60%);
 }
 .site-head { position: relative; z-index: 1; background: rgba(11, 26, 69, .6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 68px; }
@@ -333,20 +333,20 @@ body { margin: 0; } img { max-width: 100%; } [hidden] { display: none !important
   // pixel streak. Kept dim so it stays behind the content.
   const c = document.getElementById("sky"), g = c.getContext("2d");
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let W = 0, H = 0, px = 1, stars = [], flares = [], streak = null, nextStreak = 4000, last = 0;
+  let W = 0, H = 0, px = 1, stars = [], flares = [], streak = null, nextStreak = 1500, last = 0;
   const TINTS = ["255,255,255", "200,220,255", "160,195,255", "255,214,140"];
   function build() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = c.width = Math.round(innerWidth * dpr); H = c.height = Math.round(innerHeight * dpr); px = Math.max(1, Math.round(dpr));
-    const n = Math.round(innerWidth * innerHeight / 3800);
+    const n = Math.round(innerWidth * innerHeight / 2400);
     stars = Array.from({ length: n }, () => ({
       x: Math.random() * W, y: Math.random() * H,
-      s: (Math.random() < .82 ? 1 : 2) * px,
-      a: .12 + Math.random() * .45, tw: .3 + Math.random() * 1.1, ph: Math.random() * 6.3,
+      s: (Math.random() < .62 ? 1 : Math.random() < .85 ? 2 : 3) * px,
+      a: .25 + Math.random() * .55, tw: .3 + Math.random() * 1.1, ph: Math.random() * 6.3,
       t: TINTS[Math.random() < .86 ? (Math.random() * 3 | 0) : 3],
       dy: (.6 + Math.random() * 1.6) * px            // slow upward drift, px per second
     }));
-    flares = Array.from({ length: Math.max(4, Math.round(n / 70)) }, () => ({
+    flares = Array.from({ length: Math.max(8, Math.round(n / 35)) }, () => ({
       x: Math.random() * W, y: Math.random() * H, ph: Math.random() * 6.3, tw: .25 + Math.random() * .35
     }));
   }
@@ -361,7 +361,7 @@ body { margin: 0; } img { max-width: 100%; } [hidden] { display: none !important
       g.fillRect(Math.round(s.x), Math.round(s.y), s.s, s.s);
     }
     for (const f of flares) {
-      const a = .25 + .5 * Math.max(0, Math.sin(t * f.tw + f.ph));
+      const a = .35 + .6 * Math.max(0, Math.sin(t * f.tw + f.ph));
       const x = Math.round(f.x), y = Math.round(f.y), p = px;
       g.fillStyle = `rgba(220,232,255,${a.toFixed(3)})`;
       g.fillRect(x, y, p * 2, p * 2);
@@ -373,7 +373,7 @@ body { margin: 0; } img { max-width: 100%; } [hidden] { display: none !important
       nextStreak -= dt;
       if (!streak && nextStreak <= 0) {
         streak = { x: Math.random() * W * .7, y: Math.random() * H * .45, life: 0 };
-        nextStreak = 6000 + Math.random() * 7000;
+        nextStreak = 3500 + Math.random() * 4500;
       }
       if (streak) {
         streak.life += dt;
