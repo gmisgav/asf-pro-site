@@ -103,33 +103,18 @@ p { margin: 0; }
 .store small { font-size: 10px; color: #c9cede; }
 .store b { font-size: 18px; font-weight: 600; }
 
-/* The mascot holds a phone up to the viewer where the ball was: body, then the phone, then his glove fingers
-   on top so they wrap round its right edge */
+/* The mascot holds up a tablet whose screen is blank in the image; the real QR is laid onto it in perspective.
+   .tab is a 360px square mapped onto the screen corners in the image's own 1214px frame, then scaled with it. */
 .play { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 40px; align-items: center; padding-block: 20px 80px; }
-.holder { position: relative; width: 100%; max-width: 600px; justify-self: end; }
+.holder { position: relative; width: 100%; max-width: 640px; justify-self: end; }
 .holder img { display: block; width: 100%; height: auto; }
-.holder-glove { position: absolute; inset: 0; pointer-events: none; filter: drop-shadow(-2px 3px 3px rgba(0,0,0,.45));
-  /* only the fingertips that curl round the phone's right edge; the rest of the hand is behind it */
-  clip-path: polygon(99.3% 4.3%, 171.6% 4.3%, 157.2% 149.6%, 84.9% 149.6%); }
-.phone {
-  position: absolute; left: 66.9%; top: 53.8%; width: 27.2%; height: 43.6%;
-  transform: rotate(6deg); border-radius: 15% / 10%; padding: 1.3%;
-  background: linear-gradient(150deg, #3A4467 0%, #151B33 45%, #070A16 100%);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), inset 0 1px 0 rgba(255,255,255,.35), -12px 16px 26px -6px rgba(0,0,0,.65);
+.tab {
+  position: absolute; left: 0; top: 0; width: 360px; height: 360px; transform-origin: 0 0; visibility: hidden;
+  transform: scale(var(--s, 1)) matrix3d(0.613844, -0.271155, 0, -0.000305897, -0.104982, 0.83286, 0, -4.75773e-05, 0, 0, 1, 0, 794.9, 553.5, 0, 1);
 }
-.screen {
-  position: relative; height: 100%; border-radius: 12% / 8%; overflow: hidden;
-  background: linear-gradient(170deg, #FFFFFF 0%, #EEF1F8 100%);
-  display: grid; align-content: center; justify-items: center; gap: 7%; padding: 14% 11%;
-}
-.screen::after { /* stadium light catching the glass */
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(118deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.22) 38%, rgba(255,255,255,0) 52%), linear-gradient(180deg, rgba(10,22,64,0) 70%, rgba(10,22,64,.08));
-}
-.notch { position: absolute; top: 3.5%; left: 50%; width: 30%; height: 3.2%; transform: translateX(-50%); border-radius: 99px; background: #070A16; }
-.qr-code { width: 100%; aspect-ratio: 1; }
+.holder.ready .tab { visibility: visible; }
+.qr-code { position: absolute; left: 80px; top: 50px; width: 216px; height: 216px; }
 .qr-code svg { width: 100%; height: 100%; display: block; }
-.screen b { font: 900 clamp(9px, 1.35vw, 15px)/1 var(--f-display); color: var(--night); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
 .get-side { display: grid; gap: 18px; justify-items: start; max-width: 380px; }
 .get-side h2 { margin: 0; font: 900 clamp(36px, 4.5vw, 54px)/.95 var(--f-display); text-transform: uppercase; }
 .get-side > p { color: var(--muted); }
@@ -214,16 +199,11 @@ body { margin: 0; } img { max-width: 100%; } [hidden] { display: none !important
   </div>
 
   <div class="wrap play" id="get">
-    <div class="holder">
-      <img class="holder-body" src="mascot.webp" alt="The ASF mascot holding a phone that shows the QR code for the app" width="830" height="780">
-      <div class="phone">
-        <div class="screen">
-          <i class="notch"></i>
-          <div class="qr-code" id="qr" role="img" aria-label="QR code to download the ASF.Pro app"></div>
-          <b>Scan to play</b>
-        </div>
+    <div class="holder" id="holder">
+      <img src="mascot-qr.webp" alt="The ASF mascot pointing at you and holding up a tablet with the QR code for the app" width="1214" height="1052">
+      <div class="tab">
+        <div class="qr-code" id="qr" role="img" aria-label="QR code to download the ASF.Pro app"></div>
       </div>
-      <img class="holder-glove" src="mascot-glove.webp" alt="" width="830" height="780">
     </div>
     <div class="get-side">
       <h2>Get the app</h2>
@@ -372,8 +352,14 @@ body { margin: 0; } img { max-width: 100%; } [hidden] { display: none !important
     const n = qr.getModuleCount();
     let d = "";
     for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
-    document.getElementById("qr").innerHTML = `<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges"><path d="${d}" fill="#050C22"/></svg>`;
-  } catch (e) { document.querySelector(".phone").hidden = true; }
+    document.getElementById("qr").innerHTML = `<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges"><path d="${d}" fill="#0B0D14"/></svg>`;
+    /* the tablet overlay is laid out in the image's 1214px frame; keep it scaled with the picture */
+    const holder = document.getElementById("holder");
+    const fit = () => holder.style.setProperty("--s", holder.clientWidth / 1214);
+    fit();
+    new ResizeObserver(fit).observe(holder);
+    holder.classList.add("ready");
+  } catch (e) { /* the tablet stays blank under "Scan to play"; the App Store badge still works */ }
 })();
 </script>
 
