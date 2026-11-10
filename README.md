@@ -12,10 +12,10 @@ python3 -m http.server 8000
 
 | File | What |
 |---|---|
-| `index.html` | The page: logo hero, the mascot holding the app's QR code, App Store link, and the footer pages |
+| `index.html` | The page: logo hero, the mascot holding a phone with the app's QR code, App Store link, and the footer pages |
 | `legal.js` | Text for Terms, Privacy, Responsible Play, Support and Contact (opened by `#terms`, `#privacy`, …) |
 | `asf-logo.webp` | The ASF logo, cut out of the brand poster |
-| `mascot.webp`, `mascot-glove.webp` | The mascot cut out of the brand poster, and his glove fingers drawn over the QR card |
+| `mascot.webp`, `mascot-glove.webp` | The mascot cut out of the brand poster, and the fingertips drawn over the phone he holds |
 
 ## Before going live
 
