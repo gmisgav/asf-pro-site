@@ -14,7 +14,7 @@ python3 -m http.server 8000
 |---|---|
 | `index.html` | The page: logo hero, the mascot holding up a tablet with the app's QR code, App Store link, and the footer pages |
 | `legal.js` | Text for Terms, Privacy, Responsible Play, Support and Contact (opened by `#terms`, `#privacy`, …) |
-| `asf-logo.webp` | The ASF logo, cut out of the brand poster |
+| `asf-logo.webp` | The ASF logo, keyed off its navy backdrop with the red glow kept as soft transparency |
 | `mascot-qr.webp` | The mascot pointing at the viewer with a tablet. Its screen is blank in the image; the page draws the real QR onto it in perspective |
 
 ## Before going live
