@@ -92,7 +92,14 @@ p { margin: 0; }
 
 .pitch { text-align: center; display: grid; gap: 14px; justify-items: center; margin-top: 26px; }
 .pitch h1 { margin: 0; font: 900 clamp(40px, 6.6vw, 76px)/.92 var(--f-display); text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; }
-.pitch h1 span { color: var(--gold); }
+.pitch h1 .cash { color: var(--gold); }
+/* When it breaks onto two lines, set the words in three columns so the two THEs stack */
+@media (max-width: 820px) {
+  .pitch h1 { display: grid; grid-template-columns: repeat(3, auto); justify-content: center; column-gap: .24em; }
+  .pitch h1 .ln { display: contents; }
+  .pitch h1 .ln > span:first-child { justify-self: end; }
+  .pitch h1 .ln > span:last-child { justify-self: start; }
+}
 .pitch p { color: var(--muted); font-size: 17px; max-width: 46ch; }
 
 /* App Store badge */
@@ -193,7 +200,7 @@ body { margin: 0; } img { max-width: 100%; } [hidden] { display: none !important
   <div class="wrap">
     <div class="logo"><img src="asf-logo.webp" alt="ASF, American Sport Fans"></div>
     <div class="pitch">
-      <h1>Find the ball. <span>Win the cash.</span></h1>
+      <h1><span class="ln"><span>Find</span> <span>the</span> <span>ball.</span></span> <span class="ln cash"><span>Win</span> <span>the</span> <span>cash.</span></span></h1>
       <p>Real game photos with the ball removed. The closer your mark, the bigger the multiplier.</p>
     </div>
   </div>
