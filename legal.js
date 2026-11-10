@@ -46,14 +46,7 @@ window.ASF_DOCS = (() => {
         ["Rights, changes and disputes", `
           <p>Rights in photographs, branding and software stay with their owners or licensors.</p>
           <p>Any change to these terms carries a new version and effective date, with notice and fresh acceptance where required. Nothing here excludes a right or liability that cannot lawfully be excluded.</p>
-          <p>Governing law and dispute resolution: ${tbd("to be confirmed")}.</p>`],
-        ["Photo credits", `
-          <p>Photos on this site, ball removed by ASF:
-          <a href="https://commons.wikimedia.org/wiki/File:Foot_US_-_Ours_vs_Kangourous_-_2013-03-02_-_20.jpg" target="_blank" rel="noopener">Pierre-Selim</a> (CC BY 3.0) ·
-          <a href="https://commons.wikimedia.org/wiki/File:Nevada_vs._Air_Force_women%27s_basketball_(53688504026).jpg" target="_blank" rel="noopener">U.S. Air Force / Trevor Cokley</a> (public domain) ·
-          <a href="https://commons.wikimedia.org/wiki/File:Air_Force_vs._Fresno_State,_throwing_heat.jpg" target="_blank" rel="noopener">Justin R. Pacheco</a> (public domain) ·
-          <a href="https://commons.wikimedia.org/wiki/File:Jake_Levin_(Air_Force_Falcon%27s_men%27s_ice_hockey)_during_game_against_Bentley_Falcons_men%27s_ice_hockey_at_Cadet_Arena_in_Colorado_Springs_on_November_9,_2018_(45170233234).jpg" target="_blank" rel="noopener">U.S. Air Force / Trevor Cokley</a> (public domain) ·
-          <a href="https://commons.wikimedia.org/wiki/File:Stoney_Brook_vs._Penn_State_Women%27s_Soccer.jpg" target="_blank" rel="noopener">Noah Riffe</a> (CC0)</p>`]
+          <p>Governing law and dispute resolution: ${tbd("to be confirmed")}.</p>`]
       ]
     },
 
